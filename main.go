@@ -5,7 +5,6 @@ import (
 	"compress/gzip"
 	"context"
 	"github.com/davecgh/go-spew/spew"
-	"github.com/moul/http2curl"
 	//"encoding/base64"
 	"encoding/json"
 	"fmt"
@@ -43,8 +42,6 @@ func handleReq(r *http.Request) {
 	newBody, body := copyReader(r.Body)
 	r.Body = newBody
 	ctx := context.WithValue(r.Context(), "req.body", body)
-	curl, _ := http2curl.GetCurlCommand(r)
-	ctx = context.WithValue(ctx, "req.curl", curl.String())
 	nr := r.WithContext(ctx)
 	*r = *nr
 }
@@ -54,6 +51,7 @@ func copyReader(r io.ReadCloser) (io.ReadCloser, []byte) {
 		return r, []byte{}
 	}
 	body, err := ioutil.ReadAll(r)
+	fmt.Printf("%+v\n", string(body))
 	if err != nil {
 		panic(err)
 	}

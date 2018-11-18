@@ -19,10 +19,10 @@ type injector struct {
 }
 
 var injectors = []injector{
-	injector{
-		matcher:  matchTitleServers,
-		injector: injectTitleServers,
-	},
+//	injector{
+//		matcher:  matchTitleServers,
+//		injector: injectTitleServers,
+//	},
 }
 
 func injection(r *http.Response, body io.ReadCloser) io.ReadCloser {
@@ -86,6 +86,7 @@ func injectTitleServers(r *http.Response, body io.Reader) []byte {
 		}
 	}
 
+	spew.Dump(q)
 	newData, err := json.Marshal(q)
 	if err != nil {
 		return data

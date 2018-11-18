@@ -6,7 +6,6 @@ import (
 )
 
 type Request struct {
-	Curl    string
 	Headers http.Header
 	Method  string
 	URL     *url.URL
@@ -22,14 +21,12 @@ type Data struct {
 	Response Response
 }
 
-func NewData(r *http.Response, respBody, reqBody interface{}) *Data {
-	curl := r.Request.Context().Value("req.curl").(string)
+func NewData(r *http.Response, respBody interface{}, reqBody interface{}) *Data {
 	return &Data{
 		Request: Request{
 			Headers: r.Request.Header,
 			Method:  r.Request.Method,
 			URL:     r.Request.URL,
-			Curl:    curl,
 			Body:    reqBody,
 		},
 		Response: Response{
